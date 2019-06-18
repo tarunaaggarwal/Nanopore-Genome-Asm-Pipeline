@@ -1,7 +1,14 @@
 # Genome Assembly, Annotation and Evaluation Pipeline
 
+## The PATH for final genome assembly and annotation files:
+## Canu
+## Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/canu/round2/sn12-canu-polish-round2.fasta`
+## Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/canu-largestContig-polished/PROKKA_06172019.gff`
 
----
+## Flye
+## Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta`
+## Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished/PROKKA_05302019.gff`
+
 ---
 
 ## Basecalling and Binning of `fast5` file in a directory called `barcode01`. This directory is different than `trim01` which contains previously basecalled and binned samples. 
@@ -180,90 +187,6 @@ L75                         2
 
 ## Polishing the above two assemblies
 
-### First round of polishing for flye assembly
-### pull out the largest contig
-```
-samtools faidx ~/annie-rowe/data-clean/ont/flye-results/trim01/assembly.fasta contig_1 > ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
-```
-### index the largest contig
-```
-bwa index ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
-```
-### map the raw Illumina reads
-```
-bwa mem \
--t 8 \
-~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta \
-~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p1.fastq.gz \
-~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p2.fastq.gz > ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sam
-```
-### convert sam to bam
-```
-samtools view \
--bS ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sam > ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.bam
-```
-### sort the bam file
-```
-samtools sort \
-~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.bam \
--o ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam
-```
-### index the sorted bam file
-```
-samtools index ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam
-```
-
-### polish with Pilon v1.23
-```
-java -Xmx16G -jar ~/pkgs/pilon/pilon-1.23.jar \
---genome ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta \
---frags ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam \
---outdir ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round1 \
---output sn12-polish-round1
---fix all --changes
-```
-
-### repeat a second round of polishing
-```
-bwa index ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta
-```
-```
-bwa mem -t 8 \
-~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta \
-~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p1.fastq.gz \
-~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p2.fastq.gz > ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sam
-```
-```
-samtools view -Sb \
-~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sam > ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.bam
-```
-```
-samtools sort \
-~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.bam \
--o ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam
-```
-```
-samtools index ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam
-```
-```
-java -Xmx16G -jar ~/pkgs/pilon/pilon-1.23.jar \
---genome ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta \
---frags ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam \
---outdir ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2 \
---output sn12-flye-polish-round2
---fix all --changes
-```
-### run prokka on the unpolished largest contig
-```
-prokka \
---outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-unpolished \
-~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
-```
-### run prokka on the polished largest contig
-```
-prokka --outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta
-```
-
 ### First round of polishing for canu assembly
 ### pull out the largest contig
 ```
@@ -350,6 +273,91 @@ prokka \
 prokka --outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/canu-largestContig-polished ~/annie-rowe/data-clean/ont/pilon-polished-assembly/canu/round2/sn12-canu-polish-round2.fasta
 ```
 
+
+### First round of polishing for flye assembly
+### pull out the largest contig
+```
+samtools faidx ~/annie-rowe/data-clean/ont/flye-results/trim01/assembly.fasta contig_1 > ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
+```
+### index the largest contig
+```
+bwa index ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
+```
+### map the raw Illumina reads
+```
+bwa mem \
+-t 8 \
+~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta \
+~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p1.fastq.gz \
+~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p2.fastq.gz > ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sam
+```
+### convert sam to bam
+```
+samtools view \
+-bS ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sam > ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.bam
+```
+### sort the bam file
+```
+samtools sort \
+~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.bam \
+-o ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam
+```
+### index the sorted bam file
+```
+samtools index ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam
+```
+
+### polish with Pilon v1.23
+```
+java -Xmx16G -jar ~/pkgs/pilon/pilon-1.23.jar \
+--genome ~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta \
+--frags ~/annie-rowe/data-clean/ont/illumina-reads-against-flye-asm/LW_SG_SN12--68.sorted.bam \
+--outdir ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round1 \
+--output sn12-polish-round1
+--fix all --changes
+```
+
+### repeat a second round of polishing
+```
+bwa index ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta
+```
+```
+bwa mem -t 8 \
+~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta \
+~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p1.fastq.gz \
+~/annie-rowe/data-raw/illumina/LW_SG_SN12--68.raw1_p2.fastq.gz > ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sam
+```
+```
+samtools view -Sb \
+~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sam > ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.bam
+```
+```
+samtools sort \
+~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.bam \
+-o ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam
+```
+```
+samtools index ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam
+```
+```
+java -Xmx16G -jar ~/pkgs/pilon/pilon-1.23.jar \
+--genome ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.fasta \
+--frags ~/annie-rowe/data-clean/ont/pilon-polished-assembly/round1/sn12-polish-round1.sorted.bam \
+--outdir ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2 \
+--output sn12-flye-polish-round2
+--fix all --changes
+```
+### run prokka on the unpolished largest contig
+```
+prokka \
+--outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-unpolished \
+~/annie-rowe/data-clean/ont/flye-results/trim01/largestContig.fasta
+```
+### run prokka on the polished largest contig
+```
+prokka --outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished ~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta
+```
+
 ### run blast against swissprot db. The basic blastp command is below
 ```
 blastp -num_threads 4 \
@@ -359,21 +367,25 @@ blastp -num_threads 4 \
 -outfmt "6 qseqid qlen sseqid sallseqid slen qstart qend sstart send evalue bitscore length pident nident mismatch positive gapopen gaps frames qframe sframe stitle qcovs" \
 -max_target_seqs 1
 ```
-### filter blast results for polished assembly
+### filter blast results for polished and unpolished assembly using the following `awk` command. Pull out cols 1, 2, 3, 5 which contain queryID, queryLen, subjectID, and subjectLen, respectively.
 ```
-cat canu-largestContig-polished_vs_uniprot.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > canu-largestContig-polished_vs_uniprot.qlen.slen.blast
+cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
 ```
-### filter blast results for unpolished assembly
-```
-cat canu-largestContig-unpolished_vs_uniprot.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > canu-largestContig-unpolished_vs_uniprot.qlen.slen.blast
-```
-### make histograms in R to compare whether polishing reduced the number of indels and number of pseudogenes  - see R markdown files in `~/annie-rowe/scripts/custom-script`. For more info, read [Mick Watson's blog](http://www.opiniomics.org/a-simple-test-for-uncorrected-insertions-and-deletions-indels-in-bacterial-genomes/) on checking for indels in a genome assembly.
 
+### make histograms in R to compare whether polishing reduced the number of indels and number of pseudogenes
+  - [Canu assembly comparison before and after polishing.](https://github.com/tarunaaggarwal/Nanopore-Genome-Asm-Pipeline/blob/master/pdfs/Canu-Assembly-Indels-Before-and-After-Polishing.pdf)
+  - [Flye assembly comparsion before and after polishing.](https://github.com/tarunaaggarwal/Nanopore-Genome-Asm-Pipeline/blob/master/pdfs/Flye-Assembly-Indels-Before-and-After-Polishing.pdf)
+  - The above R markdown files are also in `~/annie-rowe/scripts/custom-script`. 
+  - For more info, read [Mick Watson's blog](http://www.opiniomics.org/a-simple-test-for-uncorrected-insertions-and-deletions-indels-in-bacterial-genomes/) on checking for indels in a genome assembly.
 
-### Below are the histograms for Flye and Canu assemblies before and after polishing with Pilon. 
-> Flye - total number of **5,513** sequences
-![Barcode01 Sequence Distribution](https://www.dropbox.com/s/nkq1u400pl3p6k5/barcode01-seq-len-histo.png?raw=1)
+### Below are quick numbers for polished and unpolished assemblies
 
-> Trim 01 - total number of **55,639** sequences
-![Trim 01 Sequence Distribution](https://www.dropbox.com/s/tj5o57smki681qe/trim01-seq-len-histo.png?raw=1)
+	Flye-Unpolished	Flye-Polished	Canu-Unpolished	Canu-Polished
+Bases	4278531	4268982	4265114	4284365
+CDS	6174	4009	7470	4067
+tRNA	52	57	57	58
+rRNA	9	9	9	9
+Hypothetical protein	3852	1778	4806	1823
+Percent Hypothetical protein	62.39067055	44.35021202	64.3373494	44.82419474
 
+### I also ran Progressive Mauve to explore congruencies among Illumina Assembly (by Lizzy) and my Canu and Flye assemblies. The Mauve outputs are in `~/annie-rowe/analysis-results/prog-mauve-output`. You can check out the `pngs` folder with lots of images for comparing the different assemblies.
