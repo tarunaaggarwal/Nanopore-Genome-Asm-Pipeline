@@ -5,7 +5,7 @@
 ## Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/canu/round2/sn12-canu-polish-round2.fasta`
 ## Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/canu-largestContig-polished/PROKKA_06172019.gff`
 
-## Flye
+## Flye (my favorite)
 ## Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta`
 ## Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished/PROKKA_05302019.gff`
 
@@ -380,12 +380,14 @@ cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
 
 ### Below are quick numbers for polished and unpolished assemblies
 
-	Flye-Unpolished	Flye-Polished	Canu-Unpolished	Canu-Polished
-Bases	4278531	4268982	4265114	4284365
-CDS	6174	4009	7470	4067
-tRNA	52	57	57	58
-rRNA	9	9	9	9
-Hypothetical protein	3852	1778	4806	1823
-Percent Hypothetical protein	62.39067055	44.35021202	64.3373494	44.82419474
+| 				  | Flye Unpolished | Flye Polished  | Canu Unpolished  | Canu Polished
+|-----------------|:-------------|:---------------:|---------------:|---------------:
+| Bases | 4278531  | 4268982     | 4265114    | 4284365
+| CDS     | 6174          | 4009      | 7470            | 4067
+| tRNA      | 52         | 57             | 57            | 58
+| rRNA      | 9         | 9             | 9            | 9
+| Hypothetical protien      | 3852         | 1778             | 4806            | 1823
+| Percent of Hypothetical protien      | 62.39         | 44.35             | 64.33            | 44.82
+
 
 ### I also ran Progressive Mauve to explore congruencies among Illumina Assembly (by Lizzy) and my Canu and Flye assemblies. The Mauve outputs are in `~/annie-rowe/analysis-results/prog-mauve-output`. You can check out the `pngs` folder with lots of images for comparing the different assemblies.
