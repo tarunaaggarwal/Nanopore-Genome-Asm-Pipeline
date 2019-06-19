@@ -9,8 +9,10 @@
 #### Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta`
 #### Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished/PROKKA_05302019.gff`
 
-> A very simple circular visual of *Thioclava electrotropha*
+* A very simple visual of *Thioclava electrotropha*
+
 ![Thioclava electrotropha](https://www.dropbox.com/s/5iewr5b3ftjyzzq/Thioclava.eletrotropha.draft-genome.png?raw=1)
+
 ---
 
 ## Basecalling and Binning of `fast5` file in a directory called `barcode01`. This directory is different than `trim01` which contains previously basecalled and binned samples. 
