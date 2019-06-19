@@ -9,6 +9,7 @@
 #### Genome assembly: `~/annie-rowe/data-clean/ont/pilon-polished-assembly/flye/round2/sn12-flye-polish-round2.fasta`
 #### Prokka annotation gff: `~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-largestContig-polished/PROKKA_05302019.gff`
 
+[Thioclava electrotropha](https://www.dropbox.com/s/5iewr5b3ftjyzzq/Thioclava.eletrotropha.draft-genome.png?raw=1)
 ---
 
 ## Basecalling and Binning of `fast5` file in a directory called `barcode01`. This directory is different than `trim01` which contains previously basecalled and binned samples. 
@@ -392,7 +393,7 @@ cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
 
 ### I also ran Progressive Mauve to explore congruencies among Illumina Assembly (by Lizzy) and my Canu and Flye assemblies. The Mauve outputs are in `~/annie-rowe/analysis-results/prog-mauve-output`. You can check out the `pngs` folder with lots of images for comparing the different assemblies.
 
-### Lastly, below are some resources for making a nice circular visual for your genome. I created a very basic one. But annotating and labeling the circular genome will require manual power.
+### Lastly, below are some resources for making a nice circular visual for your genome. Properly annotating and labeling the circular genome will require manual power.
 
 - [SnapGene Viewer](https://www.snapgene.com/snapgene-viewer/) is free tool for importing fasta and gff files to make a visual. I am becoming a big fan of this tool. It's very user friendly and the figs are good looking!
 - [Geneious](https://www.geneious.com/) is a great tool as well, but it costs money.
