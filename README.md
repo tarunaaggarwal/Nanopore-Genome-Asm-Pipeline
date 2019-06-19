@@ -386,8 +386,8 @@ cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
 | CDS     | 6174          | 4009      | 7470            | 4067
 | tRNA      | 52         | 57             | 57            | 58
 | rRNA      | 9         | 9             | 9            | 9
-| Hypothetical protien      | 3852         | 1778             | 4806            | 1823
-| Percent of Hypothetical protien      | 62.39         | 44.35             | 64.33            | 44.82
+| Hypothetical protein      | 3852         | 1778             | 4806            | 1823
+| Percent of Hypothetical protein      | 62.39         | 44.35             | 64.33            | 44.82
 
 
 ### I also ran Progressive Mauve to explore congruencies among Illumina Assembly (by Lizzy) and my Canu and Flye assemblies. The Mauve outputs are in `~/annie-rowe/analysis-results/prog-mauve-output`. You can check out the `pngs` folder with lots of images for comparing the different assemblies.
