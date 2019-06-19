@@ -88,9 +88,11 @@ python ~/annie-rowe/scripts/custom-script/counting_lines_in_fastq_file_TAS.py \
 ```
 ### Below are the sequence distribution histograms for barcode01 and trim01. 
 > Barcode 01 - total number of **5,513** sequences
+
 ![Barcode01 Sequence Distribution](https://www.dropbox.com/s/nkq1u400pl3p6k5/barcode01-seq-len-histo.png?raw=1)
 
 > Trim 01 - total number of **55,639** sequences
+
 ![Trim 01 Sequence Distribution](https://www.dropbox.com/s/tj5o57smki681q6/trim01-seq-len-histo.png?raw=1)
 
 ### assemble with Canu v1.8
