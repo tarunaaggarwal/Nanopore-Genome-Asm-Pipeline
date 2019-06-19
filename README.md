@@ -394,6 +394,6 @@ cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
 
 ### Lastly, below are some resources for making a nice circular visual for your genome. I created a very basic one. But annotating and labeling the circular genome will require manual power.
 
-- [SnapGene Viewer](https://www.snapgene.com/snapgene-viewer/) is free tool for importing fasta and gff files to make a visual.
+- [SnapGene Viewer](https://www.snapgene.com/snapgene-viewer/) is free tool for importing fasta and gff files to make a visual. I am becoming a big fan of this tool. It's very user friendly and the figs are good looking!
 - [Geneious](https://www.geneious.com/) is a great tool as well, but it costs money.
 - [CGView](http://wishart.biology.ualberta.ca/cgview/index.html) is another tool. I haven't used it because I couldn't figure it out. 
