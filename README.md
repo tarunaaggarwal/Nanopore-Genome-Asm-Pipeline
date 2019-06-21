@@ -375,7 +375,7 @@ blastp -num_threads 4 \
 ```
 ### filter blast results for polished and unpolished assembly using the following `awk` command. Pull out cols 1, 2, 3, 5 which contain queryID, queryLen, subjectID, and subjectLen, respectively.
 ```
-cat contig.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > contig.qlen.slen.blast
+cat prokka.faa.blast | awk '{print$1"\t"$2"\t"$3"\t"$5}' - > prokka.faa.blast.qlen.slen.blast
 ```
 
 ### make histograms in R to compare whether polishing reduced the number of indels and number of pseudogenes
