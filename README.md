@@ -66,7 +66,7 @@ nano +4000 classifications
 ```
 deepbinner bin \
 --classes ~/annie-rowe/data-raw/ont/tas-basecalled-binned-data/deepbinner-v0.2.0/classifications \
---reads ~/annie-rowe/data-raw/ont/tas-basecalled-binned-data/albacore-v2.3.4/bc01.combined.fastq \
+--reads /Users/taruna/Documents/ONT/MinION/data-clean/basecalled/all-26Feb2019-runs/combined.fastq \
 --out_dir ~/annie-rowe/data-raw/ont/tas-basecalled-binned-data/deepbinner-v0.2.0/
 ```
 ### unzip the deepbinner binned fastq file
@@ -368,8 +368,8 @@ prokka --outdir ~/annie-rowe/analysis-results/prokka-results/ont/trim01/flye-lar
 ```
 blastp -num_threads 4 \
 -db reference_database \
--query contig.fasta \
--out contig.blast \
+-query prokka.faa \
+-out prokka.faa.blast \
 -outfmt "6 qseqid qlen sseqid sallseqid slen qstart qend sstart send evalue bitscore length pident nident mismatch positive gapopen gaps frames qframe sframe stitle qcovs" \
 -max_target_seqs 1
 ```
